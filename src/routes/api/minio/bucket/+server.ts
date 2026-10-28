@@ -1,5 +1,4 @@
 import { minioClient } from '$lib/minIO';
-import type { BucketItemFromList } from 'minio';
 
 export async function GET() {
 	let buckets = minioClient.listBuckets();
