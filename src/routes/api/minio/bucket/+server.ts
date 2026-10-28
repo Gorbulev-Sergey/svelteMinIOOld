@@ -1,4 +1,4 @@
-import { minioClient } from '$lib/minio';
+import { minioClient } from '$lib/minIO';
 import type { BucketItemFromList } from 'minio';
 
 export async function GET() {

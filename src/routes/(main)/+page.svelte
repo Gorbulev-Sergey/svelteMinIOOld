@@ -273,8 +273,18 @@
 	buttonOkTitle="Удалить"
 	onOk={async () => {
 		if (selectedBucket.name === newObject.bucket) {
-			await deleteBucket(newObject.bucket);
-			await getBuckets().refresh();
+			await deleteBucket(newObject.bucket).then(async r => {
+				if (r.result === 'ok') {
+					toast({
+						title: 'Бакет удалён',
+						content: `Бакет <b>${newObject.bucket}</b> удалён!`,
+						_class: 'bg-success bg-10'
+					});
+					await getBuckets().refresh();
+				} else {
+					toast({ title: 'Ошибка', content: `Ошибка удаления бакета!`, _class: 'bg-danger bg-10' });
+				}
+			});
 			isModalShow.bucket.delete = false;
 			newObject.bucket = '';
 		}

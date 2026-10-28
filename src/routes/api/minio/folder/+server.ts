@@ -1,4 +1,4 @@
-import { minioClient } from '$lib/minio';
+import { minioClient } from '$lib/minIO';
 import { json } from '@sveltejs/kit';
 
 export async function GET({ url }) {

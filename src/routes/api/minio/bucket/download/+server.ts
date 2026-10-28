@@ -1,4 +1,4 @@
-import { minioClient } from '$lib/minio.js';
+import { minioClient } from '$lib/minIO';
 import { createWriteStream, mkdir } from 'fs';
 import { once } from 'events';
 import { access, constants } from 'fs/promises';
@@ -51,7 +51,7 @@ async function downloadObject(
 				readStream.pipe(writeStream);
 
 				// Ждём окончания записи
-				await once(writeStream, 'finish').then((_) => {
+				await once(writeStream, 'finish').then(_ => {
 					console.log(`${index ? index + '. ' : ''}Файл сохранён: ${localPath}`);
 				});
 			} catch (err) {
@@ -64,26 +64,21 @@ async function downloadObject(
 	});
 }
 
-async function downloadBucket(
-	minioClient: Client,
-	bucketName: string,
-	baseDir: string,
-	prefix = ''
-) {
+async function downloadBucket(minioClient: Client, bucketName: string, baseDir: string, prefix = '') {
 	// Собираем все имена объектов из потока listObjects
 	const objects = await new Promise((resolve, reject) => {
 		const names = [];
 		const stream = minioClient.listObjects(bucketName, prefix, true);
 
-		stream.on('data', (obj) => {
+		stream.on('data', obj => {
 			if (obj.name) names.push(obj.name);
 		});
 
-		stream.on('error', (err) => reject(err));
+		stream.on('error', err => reject(err));
 		stream.on('end', () => resolve(names));
 	});
 
-	let files = (objects as [])?.filter((o) => o?.at(-1) != '/');
+	let files = (objects as [])?.filter(o => o?.at(-1) != '/');
 
 	console.log(`Найдено файлов: ${files.length}`);
 

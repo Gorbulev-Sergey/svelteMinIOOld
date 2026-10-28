@@ -23,16 +23,20 @@ export const addBucket = query(v.string(), async bucket => {
 	}
 });
 
-export const deleteBucket = command(v.string(), async bucket => {
-	// Удаляем содержимое бакета
-	const objectsStream = minioClient.listObjects(bucket, '', true);
-	for await (const obj of objectsStream) {
-		if (obj.isDir) continue;
-		await minioClient.removeObject(bucket, obj.name);
+export const deleteBucket = query(v.string(), async bucket => {
+	try {
+		// Удаляем содержимое бакета
+		const objectsStream = minioClient.listObjects(bucket, '', true);
+		for await (const obj of objectsStream) {
+			if (obj.isDir) continue;
+			await minioClient.removeObject(bucket, obj.name);
+		}
+		// Удаляем сам бакет
+		await minioClient.removeBucket(bucket);
+		return { result: 'ok' };
+	} catch (error) {
+		return { result: error };
 	}
-
-	// Удаляем сам бакет
-	await minioClient.removeBucket(bucket);
 });
 
 export const downloadBucket = command(v.string(), async bucket => {
