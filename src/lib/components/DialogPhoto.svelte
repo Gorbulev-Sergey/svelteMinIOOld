@@ -6,17 +6,20 @@
 	interface IProps {
 		photo?: IPhoto;
 		photos?: IPhoto[];
+		children?: Snippet<[]>;
 		isShow?: boolean;
 		onCancel?: () => void;
-		children?: Snippet<[]>;
 	}
-	let { photo, photos, isShow = $bindable(false), onCancel = () => {}, children }: IProps = $props();
+	let { photo, photos, children, isShow = $bindable(false), onCancel = () => {} }: IProps = $props();
 
+	let id = crypto.randomUUID();
+	let dialog = $derived(document.getElementById(id) as HTMLDialogElement);
 	let exif = $derived(photo?.url && photo.url.trim() !== '' ? await getPhotoEXIF(photo.url) : undefined);
 
-	function hideScroll(isHide: boolean) {
-		document.body.style.overflow = isHide ? 'hidden' : '';
-	}
+	$effect(() => {
+		if (isShow) dialog.showModal();
+		else dialog.close();
+	});
 
 	onMount(async () => {
 		document.addEventListener('keydown', e => {
@@ -35,30 +38,21 @@
 			}
 		});
 	});
-
-	$effect(() => {
-		hideScroll(isShow);
-	});
 </script>
 
-<div
-	class="modal modal-fullscreen {isShow ? 'show' : 'fade'} p-1"
-	style="background-color: #212529f0; display: {isShow ? 'block' : 'none'}; backdrop-filter: blur(1em);">
-	<div class="position-relative w-100 h-100">
-		<div class="d-flex justify-content-center align-items-center w-100 h-100">
-			<img
-				class="img-fluid h-100 rounded-1"
-				src={photo?.url}
-				style="background-position: center; background-size: contain;"
-				alt="" />
-			{#if children}
-				{@render children?.()}
-			{/if}
-		</div>
+<dialog
+	{id}
+	class="my-dialog dialog-fullscreen border-0 p-0 bg-transparent">
+	<div
+		class="position-relative img-fluid h-100"
+		style="background-image: url({photo?.url}); background-repeat: no-repeat; background-position: center; background-size: contain;">
+		{#if children}
+			{@render children?.()}
+		{/if}
 		{#if exif}
-			<div class="position-fixed bottom-0 w-100 start-0 d-flex justify-content-center p-2">
+			<div class="position-absolute d-flex justify-content-center w-100 bottom-0">
 				<div
-					class="d-flex flex-column gap-0 bg-dark bg-opacity-25 rounded-1 mb-1 p-2 flex-wrap"
+					class="d-flex flex-column gap-0 theme-inverse bg-body bg-50 rounded-3 mb-3 p-5 flex-wrap"
 					style="max-height: 20em;">
 					{#if exif.Model}
 						<div class="text-light">Камера: <b>{exif.Model}</b></div>
@@ -114,14 +108,21 @@
 
 		<button
 			aria-label="Закрыть"
-			class="btn btn-sm btn-dark bg-light me-1 p-1 bg-opacity-10 border-0 position-fixed"
-			style="top:.25rem; right:.25rem"
+			class="btn btn-sm bg-body bg-20 p-1 position-absolute rounded-3"
+			style="top:.375rem; right:.375rem;"
 			onclick={e => {
 				e.stopPropagation();
 				isShow = false;
 				onCancel();
 			}}>
-			<i class="fa-solid fa-xmark text-light"></i>
+			<i class="bi bi-x-lg"></i>
 		</button>
 	</div>
-</div>
+</dialog>
+
+<style>
+	.my-dialog::backdrop {
+		background: #212529f0;
+		backdrop-filter: blur(1em);
+	}
+</style>
