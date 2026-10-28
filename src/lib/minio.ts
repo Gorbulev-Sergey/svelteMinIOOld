@@ -1,4 +1,4 @@
-import { PUBLIC_LOGIN, PUBLIC_PASSWORD } from '$env/static/public';
+import { MINIO_LOGIN, MINIO_PASSWORD } from '$app/env/private';
 import { Client as MinIOClient } from 'minio';
 
 export const minioClient = new MinIOClient({
@@ -6,8 +6,8 @@ export const minioClient = new MinIOClient({
 	endPoint: 's3.buckets.ru',
 	port: 443,
 	useSSL: true,
-	accessKey: PUBLIC_LOGIN,
-	secretKey: PUBLIC_PASSWORD
+	accessKey: MINIO_LOGIN,
+	secretKey: MINIO_PASSWORD
 });
 
 // export const minioClient = new MinIOClient({

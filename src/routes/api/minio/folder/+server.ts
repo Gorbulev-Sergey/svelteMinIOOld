@@ -1,4 +1,4 @@
-import { minioClient } from '$lib/minio';
+import { minioClient } from '#lib/minio';
 
 export async function GET({ url }) {
 	const bucket = url.searchParams.get('bucket') || '';

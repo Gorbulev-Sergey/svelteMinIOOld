@@ -1,9 +1,9 @@
 <script lang="ts">
-	import Block from '$lib/components/Block.svelte';
-	import Column from '$lib/components/Column.svelte';
-	import Dialog from '$lib/components/Dialog.svelte';
-	import DialogPhoto from '$lib/components/DialogPhoto.svelte';
-	import Subtitle from '$lib/components/Subtitle.svelte';
+	import Block from '#lib/components/Block.svelte';
+	import Column from '#lib/components/Column.svelte';
+	import Dialog from '#lib/components/Dialog.svelte';
+	import DialogPhoto from '#lib/components/DialogPhoto.svelte';
+	import Subtitle from '#lib/components/Subtitle.svelte';
 	import {
 		addBucket,
 		addFolder,
@@ -15,8 +15,8 @@
 		getBuckets,
 		getFolders,
 		getPhotos
-	} from '$lib/minio.remote';
-	import { store } from '$lib/store.svelte';
+	} from '#lib/minio.remote';
+	import { store } from '#lib/store.svelte';
 	import { toast } from '@gorbulevsv/toasts';
 
 	let buckets = $derived(await getBuckets());

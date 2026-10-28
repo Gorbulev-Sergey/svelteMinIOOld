@@ -1,4 +1,4 @@
-import { minioClient } from '$lib/minio';
+import { minioClient } from '#lib/minio';
 import ExifReader from 'exifreader';
 
 export async function POST({ fetch, request }) {

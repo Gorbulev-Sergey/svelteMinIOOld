@@ -2,9 +2,9 @@
 	import 'bootstrap/dist/css/bootstrap.min.css';
 	import 'bootstrap-icons/font/bootstrap-icons.min.css';
 	import { page } from '$app/state';
-	import favicon from '$lib/assets/favicon.svg';
-	import RenderTitle from '$lib/components/RenderTitle.svelte';
-	import { store } from '$lib/store.svelte';
+	import favicon from '#lib/assets/favicon.svg';
+	import RenderTitle from '#lib/components/RenderTitle.svelte';
+	import { store } from '#lib/store.svelte';
 	import { toast, Toaster } from '@gorbulevsv/toasts';
 
 	let { children } = $props();
