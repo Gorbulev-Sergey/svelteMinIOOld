@@ -37,7 +37,7 @@ jobs:
             echo "npm:  $(npm -v)"
 
             # 3. Переходим в проект
-            cd /var/www/svelteSkitPodkopaevo
+            cd /projects/svelteMinIO
 
             # 4. Обновляем код (ветка должна совпадать с триггером!)
             git fetch --all --prune
@@ -62,8 +62,8 @@ jobs:
             NODE_ENV=production npm run build
 
             # 9. Перезапуск PM2
-            pm2 restart svelteSkitPodkopaevo \
-              || pm2 start build/index.js --name svelteSkitPodkopaevo
+            pm2 restart svelteMinIO \
+              || pm2 start build/index.js --name svelteMinIO
 
             # 10. Сохраняем список процессов PM2 (чтобы пережить ребут)
             pm2 save
