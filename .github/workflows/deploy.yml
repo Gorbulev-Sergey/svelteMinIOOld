@@ -41,7 +41,7 @@ jobs:
 
             # 4. Обновляем код (ветка должна совпадать с триггером!)
             git fetch --all --prune
-            git reset --hard origin/ubuntu
+            git reset --hard origin/main
 
             # 5. ВАЖНО: снимаем NODE_ENV=production на время установки,
             #    иначе npm ci не поставит devDependencies (vite, svelte-kit и т.д.)
