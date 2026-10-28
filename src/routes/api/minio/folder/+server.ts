@@ -1,5 +1,4 @@
-import { minioClient } from '$lib/minIO';
-import { json } from '@sveltejs/kit';
+import { minioClient } from '$lib/minio';
 
 export async function GET({ url }) {
 	const bucket = url.searchParams.get('bucket') || '';

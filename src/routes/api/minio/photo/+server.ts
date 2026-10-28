@@ -1,4 +1,4 @@
-import { minioClient } from '$lib/minIO';
+import { minioClient } from '$lib/minio';
 
 export async function GET({ url }) {
 	// читаем префикс из query-параметра, например ?folder=images

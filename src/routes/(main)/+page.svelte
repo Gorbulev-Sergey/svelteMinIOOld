@@ -15,7 +15,7 @@
 		getBuckets,
 		getFolders,
 		getPhotos
-	} from '$lib/minIO.remote';
+	} from '$lib/minio.remote';
 	import { store } from '$lib/store.svelte';
 	import { toast } from '@gorbulevsv/toasts';
 

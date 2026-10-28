@@ -1,9 +1,9 @@
-import { minioClient } from '$lib/minIO';
 import { createWriteStream, mkdir } from 'fs';
 import { once } from 'events';
 import { access, constants } from 'fs/promises';
 import type { Client } from 'minio';
 import { dirname } from 'path';
+import { minioClient } from '$lib/minio';
 
 export async function POST({ request }) {
 	let { bucket } = await request.json();

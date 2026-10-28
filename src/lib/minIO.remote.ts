@@ -1,5 +1,4 @@
 import { command, query } from '$app/server';
-import { minioClient } from '$lib/minIO';
 import exifr from 'exifr';
 import { createWriteStream, mkdir } from 'fs';
 import { once } from 'events';
@@ -7,6 +6,7 @@ import { access, constants } from 'fs/promises';
 import type { Client } from 'minio';
 import { dirname } from 'path';
 import * as v from 'valibot';
+import { minioClient } from './minio';
 
 export const getBuckets = query(async () => {
 	return minioClient.listBuckets();

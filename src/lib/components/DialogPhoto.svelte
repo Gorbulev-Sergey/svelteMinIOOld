@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getPhotoEXIF } from '$lib/minIO.remote';
+	import { getPhotoEXIF } from '$lib/minio.remote';
 	import type { IPhoto } from '$lib/models/IPhoto';
 	import { onMount, type Snippet } from 'svelte';
 
